@@ -1,6 +1,6 @@
 # UnityExplorer MCP Server
 
-An [MCP (Model Context Protocol)](https://modelcontextprotocol.io) server that lets Claude Code (or any MCP client) programmatically inspect and interact with Unity games running [UnityExplorer](https://github.com/sinai-dev/UnityExplorer).
+An [MCP (Model Context Protocol)](https://modelcontextprotocol.io) server that lets Claude Code (or any MCP client) programmatically inspect and interact with Unity games running [UnityExplorer](https://github.com/sinai-dev/UnityExplorer). The in-game bridge was originally written in [DrDraxi/UnityExplorer](https://github.com/DrDraxi/UnityExplorer) and is ported here onto the [yukieiji/UnityExplorer](https://github.com/yukieiji/UnityExplorer) fork.
 
 ## How It Works
 
@@ -14,7 +14,7 @@ The Python server acts as a persistent middleman. Any game running UnityExplorer
 
 ### 1. Install UnityExplorer with MCP Support
 
-Download the appropriate build for your mod loader from the [Releases](https://github.com/DrDraxi/UnityExplorer/releases) page and install normally:
+Build this fork for your mod loader (see [Building](../README.md#building); the official yukieiji releases do not include MCP) and install normally:
 
 - **BepInEx**: Copy DLL to `BepInEx/plugins/`
 - **MelonLoader**: Copy DLL to `Mods/`, libs to `UserLibs/`

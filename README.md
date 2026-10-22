@@ -11,6 +11,7 @@
 <p align="center">
   ✨ Powered by <a href="https://github.com/yukieiji/UniverseLib">UniverseLib</a><br>
   🛠️ This is fork of <a href="https://github.com/sinai-dev/UnityExplorer">UnityExplorer</a> maintained by yukieiji<br>
+  🤖 This fork additionally adds an <a href="#mcp-server">MCP server</a> so AI assistants can inspect and control running games
 </p>
 
 ## Changes from original 
@@ -19,6 +20,7 @@
   - Compatible with MelonLoader 0.6.x(OpenBeta) or later([DL](https://github.com/yukieiji/UnityExplorer/releases/latest/download/UnityExplorer.MelonLoader.IL2CPP.CoreCLR.zip))
   - and etc..
 - Some new featuree
+- **MCP server integration** (this fork): lets Claude Code or any other [MCP](https://modelcontextprotocol.io) client inspect and control a running game through UnityExplorer. See [MCP Server](#mcp-server).
 - Stabilize overall performance by adjusting project settings, etc.
 
 If there are any bugs or features you want, please create a [ticket](https://github.com/yukieiji/UnityExplorer/issues/new/choose)!
@@ -187,6 +189,25 @@ The inspector is used to see detailed information on objects of any type and man
   * BepInEx: `BepInEx\config\com.sinai.unityexplorer.cfg`
   * MelonLoader: `UserData\MelonPreferences.cfg`
   * Standalone `{DLL_location}\sinai-dev-UnityExplorer\config.cfg`
+
+### MCP Server
+
+This fork adds an in-game [Model Context Protocol](https://modelcontextprotocol.io) bridge, ported from [DrDraxi/UnityExplorer](https://github.com/DrDraxi/UnityExplorer) (`feature/mcp-server`) and rebased onto the current yukieiji/UnityExplorer.
+
+```
+MCP client (e.g. Claude Code) <-stdio-> Python MCP server (mcp-server/) <-WebSocket-> UnityExplorer (in game)
+```
+
+* The game side lives in `src/MCP/`. On startup UnityExplorer connects to a WebSocket server (default `ws://localhost:27015`), and commands are executed on Unity's main thread.
+* The Python server lives in `mcp-server/` and exposes tools to browse scenes and hierarchy, search objects/classes/singletons, inspect components, get/set values, invoke methods, run C# in the console, read logs and capture screenshots.
+* New settings: `MCP Server URL`, `MCP Auto Connect` and `MCP Reconnect Delay` (in the Options tab or the config file).
+* See [mcp-server/README.md](mcp-server/README.md) for setup and the full tool list.
+
+Changes made to the original MCP branch while porting it:
+* The MCP hooks in `ExplorerCore`, `ExplorerBehaviour` and `ConfigManager` were re-applied on top of the refactored upstream files.
+* `ConsoleController` is now instance-based upstream, so it exposes small internal accessors (`SRENotSupported`, `Evaluator`, `Reset`) and the `execute_csharp` tool reads the evaluator's output buffer directly.
+
+> **Note:** the release download links above point to yukieiji's official releases, which do **not** include MCP support. To use MCP, build this fork yourself (see below).
 
 # Building
 
