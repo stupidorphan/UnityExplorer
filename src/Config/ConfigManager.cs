@@ -31,6 +31,11 @@ namespace UnityExplorer.Config
         public static ConfigElement<string> CSConsole_Assembly_Blacklist;
         public static ConfigElement<string> Reflection_Signature_Blacklist;
 
+        // MCP Settings
+        public static ConfigElement<string> MCP_Server_URL;
+        public static ConfigElement<bool> MCP_Auto_Connect;
+        public static ConfigElement<float> MCP_Reconnect_Delay;
+
         public static ConfigElement<KeyCode> TIME_SCALE_TOGGLE;
         public static ConfigElement<KeyCode> LOCK_TIME_SCALE_TO_ZERO;
         public static ConfigElement<KeyCode> LOCK_TIME_SCALE_TO_NORMAL;
@@ -177,6 +182,18 @@ namespace UnityExplorer.Config
             LOCK_TIME_SCALE_TO_DOUBLE = new("Speed-Up Keybind",
                 "Shortcut key for setting TimeScale to double",
                 KeyCode.None);
+
+            MCP_Server_URL = new("MCP Server URL",
+                "The WebSocket URL of the MCP server to connect to.",
+                "ws://localhost:27015");
+
+            MCP_Auto_Connect = new("MCP Auto Connect",
+                "Automatically connect to the MCP server on startup.",
+                true);
+
+            MCP_Reconnect_Delay = new("MCP Reconnect Delay",
+                "Seconds between reconnection attempts to the MCP server.",
+                5f);
         }
     }
 }

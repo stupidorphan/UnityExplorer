@@ -126,6 +126,11 @@ public class ConsoleController
         _instance = new ConsoleController();
     }
 
+    // Accessors for the MCP bridge
+    internal static bool SRENotSupported => _instance?.sreNotSupported ?? true;
+    internal static ConsoleScriptEvaluator? Evaluator => _instance?._evaluator;
+    internal static void Reset() => _instance?.ResetConsole(false);
+
     public static string[]? GetCompletions(string inputs, out string prefix)
     {
         prefix = "";

@@ -32,6 +32,8 @@ public class ExplorerBehaviour : MonoBehaviour
     internal void Update()
     {
         ExplorerCore.Update();
+        MCP.CommandDispatcher.Update();
+        MCP.MCPBridge.Update();
     }
 
     // For editor, to clean up objects
@@ -47,6 +49,9 @@ public class ExplorerBehaviour : MonoBehaviour
     {
         if (quitting) return;
         quitting = true;
+
+        MCP.MCPBridge.Shutdown();
+
         if (UIManager.UIRoot)
             TryDestroy(UIManager.UIRoot.transform.root.gameObject);
 
