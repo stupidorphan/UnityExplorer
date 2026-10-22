@@ -14,7 +14,7 @@ The Python server acts as a persistent middleman. Any game running UnityExplorer
 
 ### 1. Install UnityExplorer with MCP Support
 
-Build this fork for your mod loader (see [Building](../README.md#building); the official yukieiji releases do not include MCP) and install normally:
+Download the build for your mod loader from the [Releases](https://github.com/stupidorphan/UnityExplorer/releases/latest) page of this fork (the official yukieiji releases do not include MCP), or build it yourself (see [Building](../README.md#building)), and install normally:
 
 - **BepInEx**: Copy DLL to `BepInEx/plugins/`
 - **MelonLoader**: Copy DLL to `Mods/`, libs to `UserLibs/`

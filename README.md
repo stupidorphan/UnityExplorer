@@ -207,7 +207,7 @@ Changes made to the original MCP branch while porting it:
 * The MCP hooks in `ExplorerCore`, `ExplorerBehaviour` and `ConfigManager` were re-applied on top of the refactored upstream files.
 * `ConsoleController` is now instance-based upstream, so it exposes small internal accessors (`SRENotSupported`, `Evaluator`, `Reset`) and the `execute_csharp` tool reads the evaluator's output buffer directly.
 
-> **Note:** the release download links above point to yukieiji's official releases, which do **not** include MCP support. To use MCP, build this fork yourself (see below).
+> **Note:** the release download links above point to yukieiji's official releases, which do **not** include MCP support. MCP-enabled builds for every loader (and a zip of the Python MCP server) are on this fork's [releases page](https://github.com/stupidorphan/UnityExplorer/releases/latest), or you can build it yourself (see below).
 
 # Building
 
