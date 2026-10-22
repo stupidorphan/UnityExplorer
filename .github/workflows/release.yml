@@ -1,0 +1,69 @@
+name: Release UnityExplorer (MCP)
+
+on:
+  # Push a tag such as v4.13.6-mcp.1 to build and publish a release
+  push:
+    tags: ['v*-mcp*']
+  # Or run manually from the Actions tab and give the tag to create
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag to create (e.g. v4.13.6-mcp.1)'
+        required: true
+        type: string
+      prerelease:
+        description: 'Mark as pre-release'
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+
+    steps:
+      - name: Resolve tag
+        id: meta
+        shell: pwsh
+        run: |
+          $tag = if ('${{ github.event_name }}' -eq 'workflow_dispatch') { '${{ inputs.tag }}' } else { '${{ github.ref_name }}' }
+          "tag=$tag" >> $env:GITHUB_OUTPUT
+
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          submodules: true
+
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '6.x'
+
+      - name: Build UE
+        shell: pwsh
+        run: ./build.ps1
+
+      - name: Package MCP server
+        shell: pwsh
+        run: git archive --format=zip --output=Release/UnityExplorer.MCP-Server.zip "HEAD:mcp-server"
+
+      - name: Publish release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $tag = '${{ steps.meta.outputs.tag }}'
+          $assets = Get-ChildItem Release -Filter *.zip | ForEach-Object { $_.FullName }
+          if (-not $assets) { throw 'No release zips were produced' }
+          $assets | ForEach-Object { Write-Host "asset: $_" }
+
+          $args = @($tag) + $assets + @(
+            '--target', '${{ github.sha }}',
+            '--title', "UnityExplorer $tag",
+            '--notes', "UnityExplorer with MCP server support. Install the build for your mod loader, then set up the Python MCP server from ``UnityExplorer.MCP-Server.zip`` (see mcp-server/README.md)."
+          )
+          if ('${{ inputs.prerelease }}' -eq 'true') { $args += '--prerelease' }
+          gh release create @args
