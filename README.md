@@ -11,7 +11,7 @@
 <p align="center">
   ✨ Powered by <a href="https://github.com/yukieiji/UniverseLib">UniverseLib</a><br>
   🛠️ This is fork of <a href="https://github.com/sinai-dev/UnityExplorer">UnityExplorer</a> maintained by yukieiji<br>
-  🤖 This fork additionally adds an <a href="#mcp-server">MCP server</a> so AI assistants can inspect and control running games
+  🤖 This fork additionally adds an <a href="#mcp-server">MCP server</a> so AI assistants can inspect and control running games, created by <a href="https://github.com/DrDraxi">DrDraxi</a>
 </p>
 
 ## Changes from original 
@@ -194,6 +194,8 @@ The inspector is used to see detailed information on objects of any type and man
 
 This fork adds an in-game [Model Context Protocol](https://modelcontextprotocol.io) bridge, ported from [DrDraxi/UnityExplorer](https://github.com/DrDraxi/UnityExplorer) (`feature/mcp-server`) and rebased onto the current yukieiji/UnityExplorer.
 
+**Credit:** the MCP server, the in-game bridge (`src/MCP/`) and the Python server (`mcp-server/`) were designed and written by [DrDraxi](https://github.com/DrDraxi). All of that work is theirs; this fork only ports it onto the current upstream and adds release builds. Their original commits are preserved in this repository's git history.
+
 ```
 MCP client (e.g. Claude Code) <-stdio-> Python MCP server (mcp-server/) <-WebSocket-> UnityExplorer (in game)
 ```
@@ -217,6 +219,7 @@ Building individual configurations from your IDE is fine, though note that the i
 
 # Acknowledgments
 
+* [DrDraxi](https://github.com/DrDraxi) for the MCP (Model Context Protocol) server integration in [DrDraxi/UnityExplorer](https://github.com/DrDraxi/UnityExplorer), which this fork is built on top of.
 * [ManlyMarco](https://github.com/ManlyMarco) for [Runtime Unity Editor](https://github.com/ManlyMarco/RuntimeUnityEditor) \[[license](THIRDPARTY_LICENSES.md#runtimeunityeditor-license)\], the ScriptEvaluator from RUE's REPL console was used as the base for UnityExplorer's C# console.
 * [Geoffrey Horsington](https://github.com/ghorsington) for [mcs-unity](https://github.com/sinai-dev/mcs-unity) \[no license\], used as the `Mono.CSharp` reference for the C# Console.
 
